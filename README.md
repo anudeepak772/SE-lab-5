@@ -32,13 +32,11 @@ The code works, but only just. It has quality, style and security problems of th
 
 4. **Document the issues** in `issues.md` using this table (at least 4 rows, high and medium severity first):
 
-   | Issue | Type | Line(s) | Description | Fix Approach |
-   |-------|------|---------|-------------|--------------|
-   | ... | ... | ... | ... | ... |
+ 
 
-5. **Fix the code.** Fix at least 4 of the issues you documented, then rerun all three tools to confirm they are gone. Repeat until you are satisfied. The program should still do its job when you are done.
+6. **Fix the code.** Fix at least 4 of the issues you documented, then rerun all three tools to confirm they are gone. Repeat until you are satisfied. The program should still do its job when you are done.
 
-6. **Reflect.** Answer the four reflection questions from the handout in `reflection.md`.
+7. **Reflect.** Answer the four reflection questions from the handout in `reflection.md`.
 
 ## Deliverables
 
