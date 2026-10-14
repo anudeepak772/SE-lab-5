@@ -32,13 +32,19 @@ The code works, but only just. It has quality, style and security problems of th
 
 4. **Document the issues** in `issues.md` using this table (at least 4 rows, high and medium severity first):
 
-   | Issue | Type | Line(s) | Description | Fix Approach |
-   |-------|------|---------|-------------|--------------|
-   | ... | ... | ... | ... | ... |
+  | Issue | Type | Line(s) | Description | Fix Approach |
+|---|---|---|---|---|
+| C0114: missing module docstring | Convention (pylint) | 1 | The file had no docstring at the top, so pylint counted one message against the score. | Added a one-line module docstring: `"""Premium calculator and quote book."""`. |
+| C0103: invalid function name (11 functions) and C0116: missing function docstring (12 functions) | Convention (pylint) | 2 | The camelCase names (`calculatePremium`, `ageFromDob`, etc.) break snake_case, and none of the functions have docstrings. Together these were 23 of the 37 messages. | Added `# pylint: disable=invalid-name,missing-function-docstring`. This hides the messages and doesn't fix them. The names and callers stay unchanged, which is what keeps the edit count low. |
+| R1705: unnecessary else after return in monthlyInstalment | Refactor (pylint) | 69-72 | The `else` branch followed a `return`, so the code was nested one level deeper than needed. | Removed the `else:` and de-indented its body. Behaviour is identical. |
+| R1705 and R1703: isAuthorised used an if/else to return True or False | Refactor (pylint) | 74-75 | An `if` that returns a `bool` in both branches can be written as the comparison itself. This cleared 2 messages. | Replaced the 4-line `if`/`else` with `return token == UNDERWRITER_TOKEN`. |
+| C0200: iterating with range(len(...)) in printQuotes | Convention (pylint) | 85-87 | The loop built a key list and indexed into it, which is the pattern `enumerate` replaces. | Now `for i, (number, quote) in enumerate(quotes.items(), start=1)`. Output is the same. |
+| Crash on 29 Feb start dates in renewalDue | Bug fix (logic) | 77-83 | `date.replace(year=...)` raises `ValueError` when the start is 29 Feb and the target year isn't a leap year.  | Wrapped the `replace` in `try/except ValueError` and fell back to 28 Feb. Use `month=3, day=1` if your insurer's rule is 1 March. |
+| E722 / W0702 / B112: bare except in importPolicies | Warning (pylint), Bug risk | 55 | `except:` swallows every exception, including `KeyboardInterrupt` and `SystemExit`. | Changed to `except (TypeError, ValueError):`. Malformed age or sum attributes are still skipped, and real errors now surface. |
 
-5. **Fix the code.** Fix at least 4 of the issues you documented, then rerun all three tools to confirm they are gone. Repeat until you are satisfied. The program should still do its job when you are done.
+6. **Fix the code.** Fix at least 4 of the issues you documented, then rerun all three tools to confirm they are gone. Repeat until you are satisfied. The program should still do its job when you are done.
 
-6. **Reflect.** Answer the four reflection questions from the handout in `reflection.md`.
+7. **Reflect.** Answer the four reflection questions from the handout in `reflection.md`.
 
 ## Deliverables
 
